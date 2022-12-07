@@ -1,0 +1,7 @@
+dj-rest-auth==2.2.5
+django==4.1.4
+django-allauth==0.51.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==4.8.0
+djoser==2.1.0
+python-decouple==3.6
