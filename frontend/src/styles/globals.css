@@ -1,26 +1,48 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+    :root {
+        --color-primary-bg: 1, 4, 9;
+        --color-primary-bg-base: 13, 17, 23;
+        --color-primary-text: 201, 209, 217;
+        --color-primary-border: 48, 54, 61;
+        --color-primary-button-bg: 33, 38, 45;
+        --color-success: 35, 134, 54;
+        --color-success-light: 29, 224, 65;
+        --color-info: 88, 166, 255;
+        --color-info-dark: 19, 35, 58;
+        --color-warning: 253, 184, 0;
+        --color-warning-light: 255, 219, 0;
+        --color-base-layer-bg: 22, 27, 34;
+        --color-danger: 248, 81, 73;
+        --color-danger-dark: 182, 35, 36;
+        --color-danger-light: 255, 123, 114;
+    }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+    .theme-black {
+        --color-primary-bg: 13, 17, 23;
+        --color-primary-text: 201, 209, 217;
+        --color-primary-border: 48, 54, 61;
+        --color-primary-button-bg: 33, 38, 45;
+        --color-success: 35, 134, 54;
+        --color-success-light: 29, 224, 65;
+        --color-info: 88, 166, 255;
+        --color-info-dark: 19, 35, 58;
+        --color-warning: 253, 184, 0;
+        --color-warning-light: 255, 219, 0;
+        --color-base-layer-bg: 22, 27, 34;
+        --color-danger: 248, 81, 73;
+        --color-danger-dark: 182, 35, 36;
+        --color-danger-light: 255, 123, 114;
+    }
 }
