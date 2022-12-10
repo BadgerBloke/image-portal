@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 function withOpacity(variableName) {
     return ({ opacityValue }) => {
         if (opacityValue !== undefined) {
@@ -9,43 +10,25 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-    content: ['./node_modules/flowbite-react/**/*.js', './src/app/**/*.tsx', './src/components/**/*.tsx'],
+    content: ['./src/pages/**/*.{ts,tsx,js,jsx}', './src/components/**/*.{ts,tsx,js,jsx}'],
     darkMode: 'media', // or 'media' or 'class'
     mode: 'jit',
     // important: true,
     theme: {
         extend: {
             colors: {
-                primary: {
-                    bg: withOpacity('--color-primary-bg'),
-                    text: withOpacity('--color-primary-text'),
-                    border: withOpacity('--color-primary-border'),
+                brand: {
+                    muted: withOpacity('--color-brand-muted'),
+                    inverted: withOpacity('--color-brand-inverted'),
+                    yellow: withOpacity('--color-brand-yellow'),
+                    red: withOpacity('--color-brand-red'),
+                    primary: withOpacity('--color-brand-primary'),
+                    base: {
+                        "light": withOpacity('--color-brand-base-light'),
+                        DEFAULT: withOpacity('--color-brand-base'),
+                    },
+                    themeShadow: withOpacity('--color-themeShadow'),
                 },
-                info: {
-                    DEFAULT: withOpacity('--color-info'),
-                    dark: withOpacity('--color-info-dark'),
-                },
-                success: {
-                    DEFAULT: withOpacity('--color-success'),
-                    light: withOpacity('--color-success-light'),
-                },
-                warn: {
-                    DEFAULT: withOpacity('--color-warning'),
-                    light: withOpacity('--color-warning-light'),
-                },
-                button: {
-                    DEFAULT: withOpacity('--color-primary-button-bg'),
-                },
-                danger: {
-                    light: withOpacity('--color-danger-light'),
-                    DEFAULT: withOpacity('--color-danger'),
-                    dark: withOpacity('--color-danger-dark'),
-                },
-                base: {
-                    layer: {
-                        bg: withOpacity('--color-base-layer-bg'),
-                    }
-                }
             },
             spacing: {
                 'screenLessNav': 'calc(100vh - 64px)'
@@ -65,7 +48,9 @@ module.exports = {
         },
     },
     plugins: [
-        require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/typography'),
         require('@tailwindcss/forms'),
-    ],
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/aspect-ratio'),
+    ]
 }

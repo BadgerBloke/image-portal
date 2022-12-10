@@ -3,7 +3,12 @@
         "baseUrl": "src",
         "paths": {
             "@components/*": ["components/*"],
-            "@context/*": ["context/*"]
+            "@utils/*": ["utils/*"],
+            "@libs/*": ["libs/*"],
+            "@assets/*": ["assets/*"],
+            "@app/*": ["app/*"],
+            "@models/*": ["models/*"],
+            "@config/*": ["config/*"]
         },
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
@@ -18,13 +23,8 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ]
+        "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules"]
 }

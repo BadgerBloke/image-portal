@@ -1,6 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { DropdownMenuOptionsInterface } from "@libs/interfaces/DropdownMenu";
 
 const DropdownMenu1 = ({ children, ...props }: any) => {
     const { options, onClick, id } = props;
@@ -68,7 +69,7 @@ const DropdownMenu = ({ children, ...props }: any) => {
                     {options &&
                         options.map(
                             (
-                                option: { label: string; value: string },
+                                option: DropdownMenuOptionsInterface,
                                 index: number
                             ) => (
                                 <DropdownMenuPrimitive.Item asChild key={index}>
