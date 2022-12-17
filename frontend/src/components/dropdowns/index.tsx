@@ -65,7 +65,7 @@ const DropdownMenu = ({ children, ...props }: any) => {
                 {children}
             </DropdownMenuPrimitive.Trigger>
             <DropdownMenuPrimitive.Portal>
-                <DropdownMenuPrimitive.Content className="flex flex-col gap-1 p-1 border rounded-md shadow-lg bg-brand-base border-brand-base-light/20">
+                <DropdownMenuPrimitive.Content className="z-10 flex flex-col gap-1 p-1 border rounded-md shadow-lg bg-brand-base border-brand-base-light/20">
                     {options &&
                         options.map(
                             (

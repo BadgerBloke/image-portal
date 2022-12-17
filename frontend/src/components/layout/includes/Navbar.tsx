@@ -4,6 +4,7 @@ import { useContext } from "react";
 import ThemeContext from "store";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import WideLogo from "@components/logo/wide";
 
 const Navbar = () => {
     const themeCtx: {
@@ -46,28 +47,34 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+    
     return (
         <nav
             className={`sticky top-0 flex items-center justify-center w-full font-semibold backdrop-blur-lg text-brand-primary
-                        ${scrolled && "shadow-lg"} bg-brand-base/70`}
+                        ${scrolled && "shadow-lg z-10"} bg-brand-base/70`}
         >
             <div
                 className={`flex items-center justify-between w-full max-w-7xl
                 ${scrolled ? "px-6 text-lg h-14" : "h-16 text-xl px-4 md:px-0"}
                 transform transition-all ease-in duration-200`}
             >
-                <div className="flex items-center justify-start gap-6"></div>
+                <div className="flex items-center justify-start h-full gap-6">
+                    <WideLogo width="w-40 md:w-80" />
+                </div>
                 <div className="flex items-center justify-end gap-6">
                     {session?.user ? (
-                        <button
-                            onClick={() =>
-                                signOut({
-                                    callbackUrl: "/",
-                                })
-                            }
-                        >
-                            Sign Out
-                        </button>
+                        <>
+                            <span>{session.user?.name?.trim() || "No Name"}</span>
+                            <button
+                                onClick={() =>
+                                    signOut({
+                                        callbackUrl: "/",
+                                    })
+                                }
+                            >
+                                Sign Out
+                            </button>
+                        </>
                     ) : (
                         <Link href="/auth/login">Sign In</Link>
                     )}
