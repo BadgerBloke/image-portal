@@ -4,13 +4,12 @@ import {
     signIn,
     getSession,
     getCsrfToken,
-} from "next-auth/react";
+} from "next-auth/client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { LabelAndField } from "@components/input/block";
-import { API_URL } from "@config/index";
 
 const Login = ({ csrf }: any) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -42,11 +41,10 @@ const Login = ({ csrf }: any) => {
         } else {
             setSwitchingPage(!switchingPage);
             try {
-                const res = await signIn("credentials", {
+                signIn("credentials", {
                     username: email,
                     password,
                     csrfToken,
-                    // redirect: false,
                 });
                 // if (res) router.push("/");
             } catch (error: any) {
@@ -82,14 +80,14 @@ const Login = ({ csrf }: any) => {
     return (
         <>
             <Head>
-                <title>Login | imageAi</title>
+                <title>Login | imageBank</title>
                 <meta name="Description" content="your personal image bank" />
                 <link rel="canonical" href="/" />
             </Head>
             <div className="flex items-center justify-center w-full min-h-screenLessNav">
                 <div className="flex flex-col items-center justify-start p-5 rounded-lg shadow-md w-fit bg-brand-base-light text-brand-base shadow-brand-themeShadow md:min-w-96">
                     <span className="mb-4 text-2xl font-semibold">
-                        Login to imageAi
+                        Login to imageBank
                     </span>
                     <form
                         className="flex flex-col w-full gap-5"
@@ -110,11 +108,10 @@ const Login = ({ csrf }: any) => {
                             type={showPassword ? "text" : "password"}
                         />
                         <div className="flex items-center justify-between w-full gap-2">
-                            <Link
-                                className="flex-1 text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold"
-                                href="/forgot-password"
-                            >
-                                Forget Password?
+                            <Link href="/forgot-password">
+                                <a className="flex-1 text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold">
+                                    Forget Password?
+                                </a>
                             </Link>
                             <div className="flex items-center justify-end flex-1 w-full gap-3">
                                 <input
@@ -141,11 +138,10 @@ const Login = ({ csrf }: any) => {
                                 Sign In
                             </button>
                         )}
-                        <Link
-                            className="text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold"
-                            href="/auth/register"
-                        >
-                            Don&apos;t have account? Register
+                        <Link href="/auth/register">
+                            <a className="text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold">
+                                Don&apos;t have account? Register
+                            </a>
                         </Link>
                     </form>
                 </div>
@@ -160,7 +156,7 @@ export async function getServerSideProps(context: any) {
     const csrf = await getCsrfToken(context);
     const { callbackUrl } = context.query;
 
-    if (session) {
+    if (session && session.accessToken) {
         return {
             redirect: {
                 destination: callbackUrl || "/",
@@ -172,7 +168,7 @@ export async function getServerSideProps(context: any) {
     return {
         props: {
             providers,
-            csrf: csrf || null,
+            csrf,
         },
     };
 }

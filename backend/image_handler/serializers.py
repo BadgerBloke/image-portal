@@ -11,4 +11,4 @@ class ImageBlockSerializer(ModelSerializer):
 class ImageUploadSerializer(ModelSerializer):
     class Meta:
         model = ImageBlock
-        fields = ("image", "title", "description")
+        fields = ("image", "title", "description", "id")

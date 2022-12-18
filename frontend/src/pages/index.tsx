@@ -7,8 +7,9 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidV4 } from "uuid";
+import axios from "axios";
 
 const Home: NextPage = () => {
     const [session] = useSession();
@@ -18,14 +19,45 @@ const Home: NextPage = () => {
         imageTitle: "",
         imageDescription: "",
     });
+    const [currentImageModification, setCurrentImageModification] = useState("");
+    const [images, setImages] = useState<
+        {
+            id: number;
+            image: string;
+            modified_at: string;
+            title: string;
+            description: string;
+        }[]
+    >([]);
     const { imageTitle, imageDescription } = formData;
 
+    // Fetching images
+    useEffect(() => {
+        const getImages = async () => {
+            try {
+                const res = await axios.get(
+                    "http://localhost:8000/image/all/",
+                    {
+                        headers: {
+                            Authorization: `JWT ${session?.accessToken}`,
+                        },
+                    }
+                );
+                setImages(res.data);
+                console.log("res", res.data);
+            } catch (error: any) {
+                console.log(error);
+            }
+        };
+        getImages();
+    }, [session]);
+
+    // Uploading image
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleFileSelected = async (file: File) => {
-        console.log("file", file);
         if (file) {
             const imageName = uuidV4();
             const imageExtension = file.name.split(".").pop();
@@ -33,7 +65,7 @@ const Home: NextPage = () => {
             const newFile = new File([file], imageSlug, {
                 type: file.type,
             });
-            console.log("newFile", newFile);
+            setCurrentImageModification(newFile.lastModified.toString()); 
             setImage(newFile);
             setIsImageAdded(true);
         } else {
@@ -47,26 +79,48 @@ const Home: NextPage = () => {
             if (image) {
                 try {
                     setIsImageAdded(false);
+                    const config = {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Accept: "application/json",
+                            Authorization: `JWT ${session?.accessToken}`,
+                        },
+                    };
+
                     const formData = new FormData();
                     formData.append("image", image);
                     formData.append("title", imageTitle);
                     formData.append("description", imageDescription);
-                    // const res = await fetch("http://localhost:8000/image/add/", {
-                    const res = await fetch("/api/upload", {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "multipart/form-data",
-                        },
-                        body: formData,
-                    });
-                    const data = await res.json();
-                    if (data.success) {
+
+                    const body = formData;
+                    const res = await axios.post(
+                        "http://localhost:8000/image/add/",
+                        body,
+                        config
+                    );
+
+                    if (res.status === 201) {
+                        const img = [...images];
+                        const newImg = {
+                            id: res.data.id,
+                            image: res.data.image,
+                            title: res.data.title,
+                            description: res.data.description,
+                            modified_at: currentImageModification,
+                        };
+
+                        img.unshift(newImg);
+                        setImages(img);
                         alert("Image uploaded successfully");
                     }
                     setImage(null);
+                    setFormData({
+                        imageTitle: "",
+                        imageDescription: "",
+                    });
                 } catch (error) {
                     setImage(null);
+                    alert("Something went wrong");
                     console.log(error);
                 }
             } else {
@@ -77,9 +131,9 @@ const Home: NextPage = () => {
         }
     };
     return (
-        <div className="flex items-center justify-center px-4 md:px-0 min-h-screenLessNav text-brand-primary">
+        <div className="flex items-center justify-center px-4 min-h-screenLessNav text-brand-primary">
             <Head>
-                <title>imageAi - images your imagination</title>
+                <title>imageBank - images your imagination</title>
             </Head>
 
             <div className="flex flex-col items-center justify-center w-full gap-5">
@@ -145,58 +199,14 @@ const Home: NextPage = () => {
                                 </button>
                             </form>
                         </PopUpModal>
-
-                        <Gallery
-                            images={[
-                                {
-                                    id: 1,
-                                    href: "/",
-                                    imageSrc: "/img/slider-1.jpg",
-                                    name: "Mukesh",
-                                    username: "mkSingh",
-                                },
-                                {
-                                    id: 2,
-                                    href: "/",
-                                    imageSrc: "/img/slider-2.jpg",
-                                    name: "MK",
-                                    username: "singh",
-                                },
-                                {
-                                    id: 3,
-                                    href: "/",
-                                    imageSrc: "/img/slider-3.jpg",
-                                    name: "MK",
-                                    username: "singh",
-                                },
-                                {
-                                    id: 4,
-                                    href: "/",
-                                    imageSrc: "/img/slider-1.jpg",
-                                    name: "Mukesh",
-                                    username: "mkSingh",
-                                },
-                                {
-                                    id: 5,
-                                    href: "/",
-                                    imageSrc: "/img/slider-2.jpg",
-                                    name: "MK",
-                                    username: "singh",
-                                },
-                                {
-                                    id: 6,
-                                    href: "/",
-                                    imageSrc: "/img/slider-3.jpg",
-                                    name: "MK",
-                                    username: "singh",
-                                },
-                            ]}
-                        />
+                        <Gallery images={images} />
                     </>
                 ) : (
                     <p className="mt-10 text-lg lg:text-2xl">
                         <Link href="/auth/login">
-                            <strong>Login</strong>
+                            <a>
+                                <strong>Login</strong>
+                            </a>
                         </Link>{" "}
                         to access your all images!
                     </p>

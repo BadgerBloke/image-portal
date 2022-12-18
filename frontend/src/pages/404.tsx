@@ -4,7 +4,7 @@ const PageNotFound = () => {
     return (
         <>
             <Head>
-                <title>Page Not Found | imageAi</title>
+                <title>Page Not Found | imageBank</title>
                 <meta
                     name="description"
                     content="Oops! Looks like you followed a bad link. If you think this is a problem with us, please let us know."

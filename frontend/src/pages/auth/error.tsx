@@ -6,7 +6,7 @@ const AuthErrorPage = () => {
     return (
         <>
             <Head>
-                <title>Auth Error | imageAi</title>
+                <title>Auth Error | imageBank</title>
                 <meta name="Description" content="your personal image bank" />
                 <link rel="canonical" href="/" />
             </Head>
@@ -16,17 +16,15 @@ const AuthErrorPage = () => {
                         Auth Error
                     </span>
                     <p>It seems to be invalid credentials!</p>
-                    <Link
-                        className="flex-1 text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold"
-                        href="/forgot-password"
-                    >
-                        Already have an account? Login
+                    <Link href="/forgot-password">
+                        <a className="flex-1 text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold">
+                            Already have an account? Login
+                        </a>
                     </Link>
-                    <Link
-                        className="text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold"
-                        href="/auth/register"
-                    >
-                        Don&apos;t have account? Register
+                    <Link href="/auth/register">
+                        <a className="text-sm font-semibold transition-all duration-300 ease-in-out text-primary w-fit hover:font-bold">
+                            Don&apos;t have account? Register
+                        </a>
                     </Link>
                 </div>
             </div>
