@@ -20,13 +20,13 @@
 
 ### Please find the glimpse of UI below:
 #### Neon Home Page
-![neon home page](./frontend/public/img/neon-home%20page.png)
+![neon home page](https://github.com/CA-MKSingh/image-portal/blob/41235674a1ae5852ed82b79c86e7d387063c535e/frontend/public/img/neon-home%20page.png)
 
 #### Dark Home Page
-![dark home page](./frontend/public/img/dark-home-page.png)
+![dark home page](https://github.com/CA-MKSingh/image-portal/blob/41235674a1ae5852ed82b79c86e7d387063c535e/frontend/public/img/dark-home-page.png)
 
 #### Dark Sign Up Page
-![dark sign up page](./frontend/public/img/dark-signup.png)
+![dark sign up page](https://github.com/CA-MKSingh/image-portal/blob/41235674a1ae5852ed82b79c86e7d387063c535e/frontend/public/img/dark-signup.png)
 
 #### Dark Login Page
-![dark login page](./frontend/public/img/dark-login.png)
+![dark login page](https://github.com/CA-MKSingh/image-portal/blob/41235674a1ae5852ed82b79c86e7d387063c535e/frontend/public/img/dark-login.png)
