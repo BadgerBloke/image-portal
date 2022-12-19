@@ -27,13 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-obxxrnunr&k$vg!p38)72r35(k2otml35cy+f$45-e3&kka(c9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
 # This should be changed in production
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
+    config("WEBSITE_URL"),
 ]
 
 # Application definition
