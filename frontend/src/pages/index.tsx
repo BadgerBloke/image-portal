@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { v4 as uuidV4 } from "uuid";
 import axios from "axios";
+import { API_URL } from "@config/index";
 
 const Home: NextPage = () => {
     const [session] = useSession();
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
         const getImages = async () => {
             try {
                 const res = await axios.get(
-                    "http://localhost:8000/image/all/",
+                    `${API_URL}/image/all/`,
                     {
                         headers: {
                             Authorization: `JWT ${session?.accessToken}`,
@@ -94,7 +95,7 @@ const Home: NextPage = () => {
 
                     const body = formData;
                     const res = await axios.post(
-                        "http://localhost:8000/image/add/",
+                        `${API_URL}/image/add/`,
                         body,
                         config
                     );
